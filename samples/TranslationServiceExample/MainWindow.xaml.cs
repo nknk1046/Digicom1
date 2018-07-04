@@ -27,7 +27,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
     using Newtonsoft.Json.Linq;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xamlÅ@2
     /// </summary>
     public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged
     {
