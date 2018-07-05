@@ -15,14 +15,16 @@
             <TextBox  x:Name="crisLogText" HorizontalAlignment="Left" Height="134" Margin="10,203,0,0" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Text="" VerticalAlignment="Top" Width="365" Grid.ColumnSpan="2" FontSize="16"/>
             <TextBlock  x:Name="crisCurrentText" Margin="10,342,17,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="56" Grid.ColumnSpan="2"/>
             <Image x:Name="_Image" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" VerticalAlignment="Top" Width="266" Grid.ColumnSpan="2"/>
-            <Button Content="Capure" Grid.Column="1" HorizontalAlignment="Right" Margin="0,144,17,0" VerticalAlignment="Top" Width="94" Click="CameraButton_Click"/>
+            <Button Content="Capture" Grid.Column="1" HorizontalAlignment="Right" Margin="0,144,17,0" VerticalAlignment="Top" Width="94" Click="CameraButton_Click"/>
             <Button Content="Send" Grid.Column="1" HorizontalAlignment="Left" Margin="85,173,0,0" VerticalAlignment="Top" Width="94" Click="SaveButton_Click"/>
             <Image x:Name="FacePhoto" Grid.Column="1" HorizontalAlignment="Left" Height="64" Margin="85,75,0,0" VerticalAlignment="Top" Width="101"/>
             <TextBox x:Name="ConditionResult" Grid.Column="1" HorizontalAlignment="Left" Height="60" Margin="85,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="94" RenderTransformOrigin="-0.454,-0.152"/>
 
         </Grid>
         <Grid HorizontalAlignment="Left" Height="464" Margin="443,30,0,0" VerticalAlignment="Top" Width="361">
-            <TextBox HorizontalAlignment="Left" Height="130" Margin="0,206,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="351"/>
+            <TextBox HorizontalAlignment="Left" Height="130" Margin="0,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="351"/>
+            <Image x:Name="t_Image" HorizontalAlignment="Left" Height="191" Margin="10,10,0,0" VerticalAlignment="Top" Width="260"/>
+            <Button Content="Capture" HorizontalAlignment="Left" Margin="270,142,0,0" VerticalAlignment="Top" Width="81" Click="CameraButton_Click2"/>
         </Grid>
 
     </Grid>

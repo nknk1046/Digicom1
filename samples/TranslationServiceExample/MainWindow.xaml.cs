@@ -366,11 +366,11 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
             }
         }
 
-        //カメラキャプチャのイベントハンドラ
-        //カメラ画像を取得して次々に表示を切り替える
+        //生徒側カメラキャプチャのイベントハンドラ
+        //生徒側カメラ画像を取得して次々に表示を切り替える
         public virtual void Capture(object state)
         {
-            Console.WriteLine("Test2");
+            Console.WriteLine("生徒側のカメラをキャプチャ");
             var camera = new VideoCapture(0/*0番目のデバイスを指定*/)
             {
                 // キャプチャする画像のサイズフレームレートの指定
@@ -382,7 +382,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
             using (var img = new Mat()) // 撮影した画像を受ける変数
             using (camera)
             {
-                Console.WriteLine("Test1");
+                Console.WriteLine("生徒側カメラの画像受け");
                 while (true)
                 {
                     if (this.IsExitCapture)
@@ -406,14 +406,62 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
             }
         }
 
+        //講師側のカメラをキャプチャ
+        public virtual void Capture2(object state)
+        {
+            Console.WriteLine("講師側のカメラをキャプチャ");
+            var camera = new VideoCapture(1/*1番目のUSBデバイスを指定*/)
+            {
+                // キャプチャする画像のサイズフレームレートの指定
+                FrameWidth = 480,
+                FrameHeight = 270,
+                // Fps = 60
+            };
 
-        /// Captureボタンが押され時
+            using (var img = new Mat()) // 撮影した画像を受ける変数
+            using (camera)
+            {
+                Console.WriteLine("講師側カメラの画像受け");
+                while (true)
+                {
+                    if (this.IsExitCapture)
+                    {
+                        this.Dispatcher.Invoke(() => this.t_Image.Source = null);
+                        break;
+                    }
+
+                    camera.Read(img); // Webカメラの読み取り（バッファに入までブロックされる
+
+                    if (img.Empty())
+                    {
+                        break;
+                    }
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        this.t_Image.Source = img.ToWriteableBitmap(); // WPFに画像を表示
+                    });
+                }
+            }
+        }
+
+
+        /// 生徒側のCaptureボタンが押され時
         protected virtual void CameraButton_Click(object sender, RoutedEventArgs e)
         {
             //this.IsExitCapture = true;
-            Console.WriteLine("起動確認");
+            Console.WriteLine("生徒側カメラ確認");
             System.Threading.ThreadPool.QueueUserWorkItem(this.Capture);
         }
+
+        /// 講師側のCaptureボタンが押され時
+        protected virtual void CameraButton_Click2(object sender, RoutedEventArgs e)
+        {
+            //this.IsExitCapture = true;
+            Console.WriteLine("講師側カメラ確認");
+            System.Threading.ThreadPool.QueueUserWorkItem(this.Capture2);
+        }
+
 
         //体調判定ボタンが押された時(FaceAPI接続)
         private async void  SaveButton_Click(object sender, RoutedEventArgs e)
@@ -427,7 +475,6 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
 
             //  Bitmap以外にも出力できるけれど、今回はBitmapにしておく
             //  また、ファイルは上書きで保存する
-            /*
             using (var fs = new System.IO.FileStream("hoge.bmp", System.IO.FileMode.Create))
             {
                 //  BmpBitmapEncoderの他に、PngBitmapEncoderとかもある
@@ -437,7 +484,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
 
                 MessageBox.Show("保存しました");
             }
-            */
+            
 
             string Currentpath = Environment.CurrentDirectory;
             string imagepath = Currentpath + "/hoge.bmp";
