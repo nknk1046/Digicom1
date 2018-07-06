@@ -272,7 +272,8 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
             var toLanguages = new List<string>() { "ja"};
             // var voiceChinese = "zh-CN-Yaoyao";
             var voiceChinese = "ja-JP-Ayumi";
-            string sub_key = "c15a8d32ef4b443e903e8646985f57fd";
+            string sub_key = "7620810559eb4d1c96f770c5ee019bd3";
+            //string sub_key = "91ad01e1da954931955dc87b6fb71c0c";
 
             //this.factory = SpeechFactory.FromSubscription(SubscriptionKey, region);
             this.factory = SpeechFactory.FromSubscription(sub_key, region);
@@ -311,6 +312,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
         /// <param name="e">The <see cref="TranslationTextResultEventArgs"/> instance containing the event data.</param>
         private void OnFinalResponse(object sender, TranslationTextResultEventArgs e)
         {
+            Console.WriteLine(e.Result.RecognitionStatus);
             if (e.Result.Text.Length == 0)
             {
                 this.WriteLine(this.crisLogText, "Status: " + e.Result.RecognitionStatus);
@@ -356,10 +358,14 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
         /// <param name="e">The <see cref="TranslationSynthesisEventArgs"/> instance containing the event data.</param>
         private void OnSynthesis(object sender, TranslationSynthesisResultEventArgs e)
         {
+            Console.WriteLine("hoge0");
+            Console.WriteLine(e.Result.Status);
             if (e.Result.Status == SynthesisStatus.Success)
             {
+                Console.WriteLine("hoge1");
                 using (var m = new MemoryStream(e.Result.Audio))
                 {
+                    Console.WriteLine("hoge2");
                     SoundPlayer simpleSound = new SoundPlayer(m);
                     simpleSound.Play();
                 }
@@ -482,7 +488,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
                 enc.Frames.Add(BitmapFrame.Create(image));
                 enc.Save(fs);
 
-                MessageBox.Show("ï€ë∂ÇµÇ‹ÇµÇΩ");
+                MessageBox.Show("ëóêMÇµÇ‹ÇµÇΩ");
             }
             
 
