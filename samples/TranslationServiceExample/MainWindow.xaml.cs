@@ -225,24 +225,21 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
-          //  this.SubscriptionKey = this.GetSubscriptionKeyFromFile(SubscriptionKeyFileName);
-            //string tmp = this.GetSubscriptionKeyFromFile(SubscriptionKeyFileName);
-            //Console.WriteLine(tmp);
-            /*
-            if (this.subscriptionKey == null || this.subscriptionKey.Length <= 0)
-            {
-                MessageBox.Show("Subscription Key is wrong or missing!");
-                this.WriteLine(this.crisLogText, "--- Error : Subscription Key is wrong or missing! ---");
-                return;
-            }
 
-            if (!this.started)
-            {*/
-                this.started = true;
-                this.LogRecognitionStart(this.crisLogText, this.crisCurrentText);
-                this.CreateRecognizer();
-                await Task.Run(async () => { await this.recognizer.StartContinuousRecognitionAsync().ConfigureAwait(false); });
-           // }
+            //生徒側カメラキャプチャスタート
+            Console.WriteLine("生徒側カメラ確認");
+            System.Threading.ThreadPool.QueueUserWorkItem(this.Capture);
+
+            //講師側カメラキャプチャスタート
+            Console.WriteLine("講師側カメラ確認");
+            System.Threading.ThreadPool.QueueUserWorkItem(this.Capture2);
+
+            //翻訳機能スタート
+            this.started = true;
+            this.LogRecognitionStart(this.crisLogText, this.crisCurrentText);
+            this.CreateRecognizer();
+            await Task.Run(async () => { await this.recognizer.StartContinuousRecognitionAsync().ConfigureAwait(false); });
+           
         }
 
         /// <summary>
@@ -302,6 +299,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
                 text += $"\n{t.Value}";
             }
 
+            //this.SetCurrentText(this.crisCurrentText, text);
             this.SetCurrentText(this.crisCurrentText, text);
         }
 
@@ -452,7 +450,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
         }
 
 
-        /// 生徒側のCaptureボタンが押され時
+        /*生徒側のCaptureボタンが押され時（スタートボタンにマージ）
         protected virtual void CameraButton_Click(object sender, RoutedEventArgs e)
         {
             //this.IsExitCapture = true;
@@ -460,14 +458,14 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
             System.Threading.ThreadPool.QueueUserWorkItem(this.Capture);
         }
 
-        /// 講師側のCaptureボタンが押され時
+        /// 講師側のCaptureボタンが押され時）（スタートボタンにマージ）
         protected virtual void CameraButton_Click2(object sender, RoutedEventArgs e)
         {
             //this.IsExitCapture = true;
             Console.WriteLine("講師側カメラ確認");
             System.Threading.ThreadPool.QueueUserWorkItem(this.Capture2);
         }
-
+        */
 
         //体調判定ボタンが押された時(FaceAPI接続)
         private async void  SaveButton_Click(object sender, RoutedEventArgs e)
@@ -488,7 +486,7 @@ namespace Microsoft.CognitiveServices.SpeechRecognition
                 enc.Frames.Add(BitmapFrame.Create(image));
                 enc.Save(fs);
 
-                MessageBox.Show("送信しました");
+               // MessageBox.Show("送信しました");
             }
             
 
